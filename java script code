@@ -1,0 +1,57 @@
+function setup() {
+  createCanvas(600, 400);
+}
+
+let time = 0;
+let wave = [];
+function draw() {
+  
+  background(255);
+  translate(200,200);
+  
+  
+  
+  let x = 0;
+  let y = 0;
+  
+  for(let i = 1; i < 90; i +=2){
+    
+    let radius = 50 * (4/ (i*PI));
+    
+    let rx = radius * cos(i * time);
+    let ry = radius * sin(i * time);
+  
+    if(i == 3 || i == 7)
+      stroke(0, 0, 255);
+    else
+      stroke(0);
+    noFill();
+    ellipse(x,y,radius * 2);
+    
+    stroke(0);
+    fill(0);
+    line(x, y, x + rx, y + ry);
+    
+    x += rx;
+    y += ry;
+  }
+  ellipse(x, y, 8);
+  wave.unshift(y);
+  
+  
+  translate(100, 0);
+  stroke(255, 0, 0);
+  line(x - 100 , y, 0, wave[0]);
+  
+  beginShape();
+  noFill();
+  for(let i = 0; i < wave.length; i++){
+      vertex(i , wave[i]);
+  }
+  endShape();
+  
+  
+  time += 0.05
+  if (wave.length > 500)
+    wave.pop();
+}
